@@ -37,6 +37,15 @@ app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads"
 # Include API v1 router
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
+@app.get("/")
+def root_index():
+    return {
+        "service": settings.PROJECT_NAME,
+        "docs_url": "/docs",
+        "api_v1": settings.API_V1_STR,
+        "status": "online"
+    }
+
 @app.get("/api/health")
 def health_check():
     return {
